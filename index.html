@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tridiv Swain Portfolio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+<style>
+
+/*======================================
+//--//-->   ABOUT
+======================================*/
+
+.about-mf .box-shadow-full {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.about-mf .about-img {
+  margin-bottom: 2rem;
+}
+
+.about-mf .about-img img {
+  margin-left: 10px;
+}
+
+
+.skill-mf .progress {
+  /* background-color: #cde1f8; */
+  margin: .5rem 0 1.2rem 0;
+  border-radius: 0;
+  height: .7rem;
+}
+
+.skill-mf .progress .progress-bar {
+  height: .7rem;
+  background-color: #ffbd39;
+}
+
+
+/* Animation styles */
+#typing-animation {
+  position: relative;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(20, end) infinite;
+}
+
+#typing-animation:before {
+  content: "";
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #ccc;
+  animation: typing-cursor 0.5s ease-in-out infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes typing-cursor {
+  from {
+    width: 5px;
+  }
+  to {
+    width: 0;
+  }
+}
+
+
+/* project image zoom effect */
+
+.zoom-effect {
+  overflow: hidden;
+  transition: transform 0.3s ease-out;
+}
+
+.zoom-effect:hover {
+  transform: scale(1.1);
+}
+
+
+</style>
+
+
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+	  
+	  
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Tridiv Swain</a>
+	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav nav ml-auto">
+	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
+	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
+	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
+	          <li class="nav-item"><a href="#project-section" class="nav-link"><span>Projects</span></a></li>
+	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+	  <section id="home-section" class="hero">
+		  <div class="home-slider  owl-carousel">
+	       <div class="slider-item ">
+	      	<div class="overlay"></div>
+	         <div class="container">
+	          <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
+	          	<div class="one-third js-fullheight order-md-last img" style="background-image:url(images/Tridiv_1.png);">
+	          	 <div class="overlay"></div>
+	          	</div>
+		          <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+		          	<div class="text">
+		          		<span class="subheading">Hello!</span>
+			            <h1 class="mb-4 mt-3">I'm <span>Tridiv Swain</span></h1>
+
+						<!-- Element to contain animated typing -->
+						<span id="typing-animation"></span>
+
+						<script>
+
+						// Initialize the typing animation
+						const typingAnimationElement = document.getElementById('typing-animation');
+
+						// Create an array of typing text
+						const typingTexts = [
+						'Engineer  ',
+						'Data Scientist  ',
+						'Researcher  ',
+						];
+
+						// Create a function to display the typing animation for a given text
+						function playTypingAnimation(text) {
+						// Loop through each character and add it to the element
+						for (let i = 0; i < text.length; i++) {
+							setTimeout(() => {
+							typingAnimationElement.textContent += text[i];
+							}, i * 200); // Increase the delay to slow down the typing animation
+						}
+
+						// Once the animation is complete, reset the text and start over
+						setTimeout(() => {
+							typingAnimationElement.textContent = '';
+							playTypingAnimation(typingTexts[(typingTexts.indexOf(text) + 1) % typingTexts.length]);
+						}, text.length * 200);
+						}
+
+						// Start the typing animation loop
+						playTypingAnimation(typingTexts[0]);
+
+						</script>
+
+						<br>
+						<br>
+			            <h2>Data Enthusiast</h2>
+						<!-- <h2 class="d-flex" style="margin-bottom: 0">With over 5 years of experience</h2> -->
+						<!-- <br> -->
+			            <p><a href="https://www.linkedin.com/in/tridiv-swain-26ai09/" class="btn btn-primary py-3 px-4">LinkedIn</a> 
+							<a href="https://scholar.google.com/citations?user=7Vpgk4MAAAAJ&hl=en" class="btn btn-white btn-outline-white py-3 px-4">My works</a></p>
+		            </div>
+		          </div>
+	        	</div>
+	        </div>
+	      </div>
+		</div>
+    </section>
+
+
+
+    <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
+    	<div class="container">
+			<div class="row">
+				<div class="row d-flex align-items-stretch">
+				<!-- <div class="row d-flex"> -->
+					<div class="col-md-6 col-lg-5 d-flex">
+						<div class="img-about img d-flex align-items-stretch">
+							<div class="overlay">
+								<div class="row">
+									<div class="col-sm-6 col-md-5">
+									  <div class="about-img">
+										<img src="images/Tridiv.png" class="img-fluid rounded b-shadow-a" alt="">
+									  </div>
+									</div>
+									<!-- Details next to profile image -->
+									<div class="col-sm-6 col-md-7">
+									  <div class="about-info">
+										<p><span class="title-s">Name: </span> <span>Tridiv Swain</span></p>
+										<p><span class="title-s">Job Role: </span> <span>Researcher And Data Scientist</span></p>
+										<p><span class="title-s">Experience: </span> <span>1 Years 4 Months</span></p>
+										<p><span class="title-s">Address: </span> <span>Bhubaneswar, India</span></p>
+									  </div>
+									</div>
+								  </div>
+
+								<div class="skill-mf">
+									<p class="title-s">Skills</p>
+									<span>Data Science</span> <span class="pull-right">90%</span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0"
+											aria-valuemax="100"></div>
+									</div>
+									
+									<span>Data Analysis</span> <span class="pull-right">70%</span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
+											aria-valuemax="100"></div>
+									</div>
+									
+									<span>Machine Learning</span> <span class="pull-right">90%</span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0"
+											aria-valuemax="100"></div>
+									</div>
+									
+									<span>T-SQL</span> <span class="pull-right">85%</span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0"
+											aria-valuemax="100"></div>
+									</div>
+									
+									<span>Artificial Intelligence</span> <span class="pull-right">80%</span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
+											aria-valuemax="100"></div>
+		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
+						<div class="row justify-content-start pb-3">
+							<div class="col-md-12 heading-section ftco-animate">
+								
+								<h1 class="big">About</h1>
+								<h2 class="mb-4">About Me</h2>
+								
+								<p>A passionate and result-oriented individual with a strong foundation in technical domain and a keen
+									interest in leveraging data-driven insights to solve complex problems. Seeking admission to the
+									Data Science/Advanced Computer Science programme to acquire advanced skills in statistical
+									analysis, machine learning, and data visualization. Committed to applying cutting-edge techniques,
+									contribute to innovative solutions, and make impactful decisions. Eager to collaborate with industry
+									professionals and academic experts to gain practical experience and propel my career towards
+									becoming a proficient Data Scientist.</p>
+								<ul class="about-info mt-4 px-md-0 px-2">
+									<li class="d-flex"><span>Profile:</span> <span>Data Science &amp; Software Engineering</span></li>
+									<li class="d-flex"><span>Domain:</span> <span>Machine Learning, Artificial Intelligence, Quantum Computing, Cloud Computing &amp; Robotics</span></li>
+									<li class="d-flex"><span>Education:</span> <span>Bachelor of Technology</span></li>
+									<li class="d-flex"><span>Language:</span> <span>English, Hindi, Oriya</span></li>
+									<li class="d-flex"><span>Tools:</span> <span>SQL, Jupyter, TEQUILA, Cloudlightning, Scikit-learn, TensorFlow, Keras, &amp; Pandas</span></li>
+									<li class="d-flex"><span>Other Skills:</span> <span>Cloud Computing, Excel, Git, &amp; SEO</span></li>
+									<li class="d-flex"><span>Interest:</span> <span>Long drive, Travelling, Epic Photography, Researching</span></li>
+									
+								</ul>
+							</div>
+						</div>
+
+
+						<div class="counter-wrap ftco-animate d-flex mt-md-3">
+							<div class="text">
+								<p class="mb-4">
+									<span class="number" data-number="10">0</span> <span>+</span>
+									<span>&nbsp; Projects completed</span>
+								</p>
+								<p><a href="https://www.linkedin.com/in/tridiv-swain-26ai09/" class="btn btn-primary py-3 px-3">LinkedIn</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </section>
+
+
+
+	
+    <section class="ftco-section ftco-no-pb" id="resume-section">
+    	<div class="container">
+    		<div class="row justify-content-center pb-5">
+          <div class="col-md-10 heading-section text-center ftco-animate">
+          	<h1 class="big big-2">Resume</h1>
+            <h2 class="mb-4">Resume</h2>
+            <p>Researcher with 1+ years of experience in playing with complex data and Data Engineering and publishing proposed reearch works. Proven expertise in data science, Artificial Intelligence, Machine Learning Algorithms and Quantum Computing.</p>
+          </div>
+        </div>
+
+		<div class="row">
+			<h1 class="big-4">Experience</h1>
+			<div class="underline"></div>
+		</div>
+		<br>
+		
+		<div class="row">
+				<div class="col-md-6">
+					<div class="resume-wrap ftco-animate">
+						<span class="date">July 2023-October 2023</span>
+						<h2>Senior Analyst- III</h2>
+						<span class="position">PwC India</span>
+						<p class="mt-4">PwC India's Advisory line of service focuses on helping clients across industries navigate complex challenges, drive growth, and improve performance through strategic, operational, and technological solutions. 
+							<ul>
+								<li>Conducted DML/DDL operations, CRUD tasks using SQL servers.</li>
+								<li>Monitored and evaluated model performance, affirming sustained model quality.</li>
+								<li>Liaised with the database apptech team and leveraging expertise in SQL servers (T-SQL).</li>
+								<li>Conducted quantitative analyses, extracting actionable insights from complex datasets.</li>
+							</ul>
+						</p>
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+					<div class="resume-wrap ftco-animate">
+						<span class="date">January 2023-July 2023</span>
+						<h2>Data Engineering and Emerging Technology Intern </h2>
+						<span class="position">PwC India</span>
+						<p class="mt-4">PwC India's Advisory line of service focuses on helping clients across industries navigate complex challenges, drive growth, and improve performance through strategic, operational, and technological solutions. 
+							<ul>
+								<li>Improved data efficiency by 30% and elevated program performance, spearheading dynamic stored procedure development
+									and data migration for an ed tech client.</li>
+								<li>Reduced weekly manual invoice processing time by 5-6% through statistical methods, machine learning, and data
+									visualisation.</li>
+								<li>Decreased data management expenses by 10-12%, optimising data storage and adopting efficient cloud resource utilisation
+									strategies.</li>
+							</ul>
+						</p>
+					</div>
+
+				</div>
+				<div class="col-md-6">
+					<div class="resume-wrap ftco-animate">
+						<span class="date">January 2022-July 2022</span>
+						<h2>Data Science and Full Stack Intern</h2>
+						<span class="position">HighRadius Technologies</span>
+						<p class="mt-4">HighRadius Technologies is a global fintech company that specializes in automating accounts receivable (AR) and treasury management processes for enterprises.
+							HighRadius leverages AI, machine learning, and robotic process automation (RPA) to provide customizable solutions for finance teams, improving efficiency and accuracy.  
+							<ul>
+								<li>Lessened excess inventory costs by 20%, developing an AI-enabled FinTech B2B Invoice Management Application.</li>
+								<li>Augmented data platform efficiency by 50-55% and diminished data latency across sources by 8-10%, strengthening data
+									integration processes.</li>
+								<li>Evaluated various machine learning models, selecting the best-fit model for predictive analysis.</li>
+							</ul>
+						</p>
+					</div>
+
+				</div>
+			</div>
+
+		<br>
+		<br>
+
+		<div class="row">
+			<h1 class="big-4">Education</h1>
+			<div class="underline"></div>
+		</div>
+		<br>
+		
+			<div class="row">
+    			<div class="col-md-6">
+    				<div class="resume-wrap ftco-animate">
+    					<span class="date">2019-2023</span>
+    					<h2>Bachelor of Technology</h2>
+    					<span class="position">Kalinga Institute Of Industrial Technology</span>
+    					<p class="mt-4">Grade: 9.56/10</p>
+    				</div>
+    			</div>
+
+    			<div class="col-md-6">
+    				<div class="resume-wrap ftco-animate">
+    					<span class="date">2018-2019</span>
+    					<h2>Higher Secondary School</h2>
+    					<span class="position">Mother's Public School</span>
+    					<p class="mt-4">Grade: First class distinction.</p>
+    				</div>
+				</div>
+    		</div>
+
+    		<div class="row justify-content-center mt-5">
+    			<div class="col-md-6 text-center ftco-animate">
+    				<p><a href="https://drive.google.com/file/d/1y38b75I8uFf4XTw6kK5di2NKRxGxDpzg/view?usp=sharing" class="btn btn-primary py-4 px-5">Download CV</a></p>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+   
+
+    <section class="ftco-section" id="project-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-5">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Research Projects</h1>
+            <h2 class="mb-4">Research Projects</h2>
+            <p>Below are the published Research works that have provided solutions and propsed model related to the field of Machine Learning, AI, Quantum computing, Cloud Computing And Autonomous Vehicles</p>
+          </div>
+        </div>
+        <div class="row d-flex">
+          <div class="col-md-4 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781032624891-6/integration-quantum-computing-healthcare-using-machine-learning-models-tridiv-swain" class="block-20 zoom-effect" style="background-image: url('images/Proj_1.png');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+
+                <h3 class="heading"><a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781032624891-6/integration-quantum-computing-healthcare-using-machine-learning-models-tridiv-swain">Integration Of Quantum Computing In Healthcare Using Machine Learning Model</a></h3>
+                <p>These computers have a wide range of healthcare-related applications,
+					including healthcare planning, quick diagnosis, tailored treatment, and
+					market optimization.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10391483" class="block-20 zoom-effect" style="background-image: url('images/Proj_2.png');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+
+                <h3 class="heading"><a href="https://ieeexplore.ieee.org/abstract/document/10391483">Evaluating Energy Consumption Patterns In A Smart Grid With Data Analytics Models</a></h3>
+                <p>Our research proposes big data analtics to enhance the data and smart grid
+					technology which can be potentially an asset for overall grid intelligence.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex ftco-animate">
+          	<div class="blog-entry">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10088396" class="block-20 zoom-effect" style="background-image: url('images/Proj_3.webp');">
+              </a>
+              <div class="text mt-3 float-right d-block">
+
+                <h3 class="heading"><a href="https://ieeexplore.ieee.org/abstract/document/10088396">Evolution of Machine Learning Algorithms For Enhancement of Self-Driving Vehicles Security</a></h3>
+                <p>Our research use CNN(Convolution Neural NETWORK) to analyze data
+					from car’s surround and foretell the navigation system which is very
+					accurate model that can be used as a real world use in future.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+	<br>
+		<!-- added justify-content-center to center align the last two projects -->
+		<div class="row d-flex justify-content-center">  
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="https://link.springer.com/chapter/10.1007/978-981-99-3010-4_35" class="block-20 zoom-effect" style="background-image: url('images/Proj_4.png');">
+				</a>
+				<div class="text mt-3 float-right d-block">
+  
+				  <h3 class="heading"><a href="https://link.springer.com/chapter/10.1007/978-981-99-3010-4_35">Integrated Quantum Health Care With Predictive Intelligence Approach</a></h3>
+				  <p>The paper primarly focuses on diseases diagnosis,healthcare planning,
+					diagnostics ,personalized medicine and cost optimization.Our research also
+					highights on developing technologies in mental health as data collection
+					increases.</p>
+				</div>
+			  </div>
+			</div>
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="https://ieeexplore.ieee.org/abstract/document/10088410" class="block-20 zoom-effect" style="background-image: url('images/Proj_5.png');">
+				</a>
+				<div class="text mt-3 float-right d-block">
+  
+				  <h3 class="heading"><a href="https://ieeexplore.ieee.org/abstract/document/10088410">Human Pose Estimation Using GNN</a></h3>
+				  <p>This paper proposes model where we use GNN(graph neural networks)
+					which shows human skeleton as interconnected joints.This was the efficient
+					method which can analyse multiple people’s poses in an image.</p>
+				</div>
+			  </div>
+			</div>
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="https://link.springer.com/chapter/10.1007/978-981-99-3932-9_10" class="block-20 zoom-effect" style="background-image: url('images/Proj_6.jpg');">
+				</a>
+				<div class="text mt-3 float-right d-block">
+  
+				  <h3 class="heading"><a href="https://link.springer.com/chapter/10.1007/978-981-99-3932-9_10">Japanese Encephalitis Symptom Prediction Using Machine Learning Algorithm</a></h3>
+				  <p>We proposed ML models to predit the force of infection that determines the
+					rate at which JEV spreads.By using this we can determine the preventive
+					measures to be taken to avoid spreading this.</p>
+				</div>
+			  </div>
+			</div>
+		 </div>
+	  </div>
+	  <br>
+	  <div class="row d-flex justify-content-center">  
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="https://ieeexplore.ieee.org/abstract/document/10053301" class="block-20 zoom-effect" style="background-image: url('images/Proj_7.png');">
+				</a>
+				<div class="text mt-3 float-right d-block">
+  
+				  <h3 class="heading"><a href="https://ieeexplore.ieee.org/abstract/document/10053301">Machine learning based data classification methods in cloud security using cloudlightning framework</a></h3>
+				  <p>As in today’s world usage of cloud computing is increases there is a always
+					a concern of cloud data security.So we focused on security of data and
+					sensitive data through encryption where cloudlightning simulator is used as
+					a framework.</p>
+				</div>
+			  </div>
+			</div>
+			<div class="col-md-4 d-flex ftco-animate">
+				<div class="blog-entry justify-content-end">
+				<a href="https://link.springer.com/chapter/10.1007/978-981-19-1076-0_18" class="block-20 zoom-effect" style="background-image: url('images/Proj_8.png');">
+				</a>
+				<div class="text mt-3 float-right d-block">
+  
+				  <h3 class="heading"><a href="https://link.springer.com/chapter/10.1007/978-981-19-1076-0_18">Integrated machine learning models for enhanced security of healthcare data</a></h3>
+				  <p>Many hospitals used to face problems providing a secured way to manage
+					large data sets of patients while efficiently monitoring security measures.So
+					we enhanced data security through user behaviour analysis reduced human
+					error and workload leading to more efficient way in decision making.</p>
+				</div>
+			  </div>
+			</div>
+    </section>
+
+	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
+      <div class="container">
+		<div class="row d-md-flex align-items-center">
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18">
+              <div class="text">
+                <strong class="number" data-number="2">0</strong>
+                <span>Achievements</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18">
+              <div class="text">
+                <strong class="number" data-number="10">0</strong>
+                <span>Projects</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18">
+              <div class="text">
+                <strong class="number" data-number="450">0</strong>
+                <span>Journaling Day To Day Activities</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18">
+              <div class="text">
+                <strong class="number" data-number="400">0</strong>
+                <span>Blocks of consistent effort</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	
+	  <div class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/Bg.jpg)">
+			<!-- <div class="container"> -->
+				<div class="row justify-content-center">
+					<div class="col-md-7 ftco-animate text-center">
+						<h2>More exploration on<span> Medium  </span> </h2>
+						<div class="heading"> <h4> I love to solve business problems &amp; uncover hidden data stories </h4>
+						<br>
+						<p><a href="https://medium.com/@tridivswain.india2" class="btn btn-primary py-3 px-5">Medium</a></p>
+						</div>
+					</div>
+				</div>
+			<!-- </div> -->
+		</div>
+	</section>
+
+
+
+    <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
+      <div class="container">
+      	<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Contact</h1>
+            <h2 class="mb-4">Contact Me</h2>
+            <p>Below are the details to reach out to me!</p>
+          </div>
+        </div>
+
+        <div class="row d-flex contact-info mb-5">
+          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
+          	<div class="align-self-stretch box p-4 text-center">
+          		<div class="icon d-flex align-items-center justify-content-center">
+          			<span class="icon-map-signs"></span>
+          		</div>
+          		<h3 class="mb-4">Address</h3>
+	            <p>Bhubaneswar, India</p>
+	          </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
+          	<div class="align-self-stretch box p-4 text-center">
+          		<div class="icon d-flex align-items-center justify-content-center">
+          			<span class="icon-phone2"></span>
+          		</div>
+          		<h3 class="mb-4">Contact Number</h3>
+	            <p><a href="tel://7735386820">Click Here</a></p>
+	          </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
+          	<div class="align-self-stretch box p-4 text-center">
+          		<div class="icon d-flex align-items-center justify-content-center">
+          			<span class="icon-paper-plane"></span>
+          		</div>
+          		<h3 class="mb-4">Email Address</h3>
+	            <p><a href="mailto:tridivswain.india2@gmail.com">tridivswain.india2@gmail.com</a></p>
+	          </div>
+          </div>
+          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
+          	<div class="align-self-stretch box p-4 text-center">
+          		<div class="icon d-flex align-items-center justify-content-center">
+          			<span class="icon-globe"></span>
+          		</div>
+          		<h3 class="mb-4">Download Resume</h3>
+	            <p><a href="https://drive.google.com/file/d/1y38b75I8uFf4XTw6kK5di2NKRxGxDpzg/view?usp=drive_link">Resume</a></p>
+	          </div>
+          </div>
+
+		  <div class="container">
+			<br>
+			<br>
+			<div class="row justify-content-center">
+				<div class="col-md-7 ftco-animate text-center">
+					<h2>Have a<span> Question?  </span> <a href="mailto:tridivswain.india2@gmail.com" class="btn btn-primary py-3 px-5">Click Here</a> </h2>
+				</div>
+			</div>
+				<br>
+					<ul class="ftco-footer-social list-unstyled d-flex justify-content-center align-items-center mb-0">
+					  <li class="ftco-animate normal-txt">Find me on  </li>
+					  <li class="ftco-animate"><a href="https://medium.com/@tridivswain.india2"><span class="icon-globe"></span></a></li>
+					  <li class="ftco-animate"><a href="https://www.linkedin.com/in/tridiv-swain-26ai09/"><span class="icon-linkedin"></span></a></li>  					 
+					  <li class="ftco-animate"><a href="https://x.com/swain_tridiv"><img src="images/twitter.png" class="img-fluid rounded b-shadow-a" alt=""></a></li>
+				      <li class="ftco-animate"><a href="https://www.instagram.com/epiclensexplorations/"><span class="icon-instagram"></span></a></li>
+					</ul>
+				<br>
+		   </div>
+   </div>
+ </section>
+
+
+ 
+	
+    <footer class="ftco-footer ftco-section">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12 text-center">
+  
+			  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://www.linkedin.com/in/tridiv-swain-26ai09/" target="_blank">Tridiv Swain</a>
+	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+			</div>
+		  </div>
+		</div>
+	  </footer>
+
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  
+  <script src="js/main.js"></script>
+    
+  </body>
+</html>
