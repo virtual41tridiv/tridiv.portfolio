@@ -4,7 +4,7 @@ A modern, immersive portfolio website built with Three.js, custom animations, an
 
 ## Preview
 
-![Portfolio Preview](preview.png)
+![Portfolio Preview](Preview.png)
 
 ## Tech Stack
 
