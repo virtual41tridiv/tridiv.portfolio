@@ -1,55 +1,92 @@
-# Tridiv Swain — Portfolio 🚀
+# Tridiv Swain — Portfolio Website
 
-A modern, immersive portfolio website built with Three.js, custom animations, and a dark aesthetic.
+> Personal portfolio of **Tridiv Swain**, Data Engineer · Singapore  
+> Built with vanilla HTML, CSS & JavaScript — no frameworks, no dependencies.
+
+[![Live Site](https://img.shields.io/badge/Live%20Site-tridivswain.com-C9A84C?style=flat-square&logo=github)](https://virtual41tridiv.github.io/tridiv.portfolio)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+
+---
 
 ## Preview
 
 ![Portfolio Preview](Preview.png)
 
+---
+
+## About
+
+A fully custom, single-file portfolio site designed around a **deep navy × warm gold** aesthetic with an animated neural-network particle background — a nod to the data science and ML work that defines my career.
+
+Sections covered:
+- **Hero** — introduction, key stats, and CTAs
+- **Skills** — categorised tech stack with visual tags
+- **Experience** — timeline of roles at PwC India and HighRadius
+- **Research** — selected publications with citation counts
+- **Education** — NUS MSc (current) and KIIT B.Tech
+- **Contact** — links to LinkedIn, GitHub, Google Scholar, and portfolio
+
+---
+
 ## Tech Stack
 
-- **Three.js** — Interactive 3D particle background with connecting lines
-- **Custom Cursor** — Smooth follow cursor with hover states
-- **Scroll Animations** — IntersectionObserver-based reveal animations
-- **Pure HTML/CSS/JS** — Zero build step, no frameworks needed
-- **Responsive** — Mobile, tablet, and desktop
+| Layer | Choice |
+|---|---|
+| Markup | HTML5 |
+| Styling | CSS3 (custom properties, grid, flexbox, animations) |
+| Interactivity | Vanilla JavaScript (Canvas API for particle network) |
+| Fonts | Cormorant Garamond · DM Sans · DM Mono (Google Fonts) |
+| Hosting | GitHub Pages |
 
-## Features
+No build tools. No npm. No frameworks. Just one `index.html`.
 
-- 🔮 **3D Particle Network** — Animated particles with dynamic connections that respond to mouse movement
-- ⚡ **Loading Screen** — Animated progress bar loader
-- 🎯 **Custom Cursor** — Dot + ring cursor with hover effects (desktop)
-- 📜 **Scroll Reveals** — Staggered fade-up animations on scroll
-- 🌊 **Hero Section** — Animated floating ring, typing-style layout, stats counter
-- 📄 **10 Research Publications** — With project cards and hover effects
-- 💼 **3 Work Experiences** — Timeline with accent border animation
-- 🎓 **Education** — Card grid with gradient hover borders
-- 📱 **Fully Responsive** — Graceful mobile fallbacks
+---
 
-## Deployment
+## Design Highlights
 
-### GitHub Pages
-1. Push this repo to GitHub
-2. Go to **Settings → Pages**
-3. Set source to **main** branch, folder **/ (root)**
-4. Your site will be live in ~1 minute
+- **Animated particle canvas** — gold-toned neural network nodes in the background
+- **Custom SVG logo mark** — geometric `TS` monogram with data-flow chevron
+- **Infinite skill ticker** — scrolling tech stack banner
+- **Gold timeline** — glowing node markers on the experience section
+- **Responsive** — mobile-friendly layout with collapsing nav
 
-### Netlify / Vercel
-Drag-and-drop the folder or connect your GitHub repo. No build step needed.
+---
 
-## Customization
+## Local Development
 
-Everything is in a single `index.html` file. Edit:
-- **Colors** — CSS variables in `:root` (accent is `#6ee7b7`)
-- **Content** — HTML sections for About, Experience, Education, Projects, Contact
-- **Particles** — Adjust `N` (particle count), colors, and speeds in the Three.js script
-- **Fonts** — Google Fonts loaded: Syne, DM Sans, IBM Plex Mono
+No setup needed. Just open the file:
 
-## License
+```bash
+git clone https://github.com/virtual41tridiv/tridiv.portfolio.git
+cd tridiv.portfolio
+open index.html        # macOS
+# or
+start index.html       # Windows
+```
 
-This project is open source and available under the [MIT License](LICENSE).
+---
 
-## Author
+## Deploying Changes
 
-**Tridiv Swain** — Data Scientist & Researcher  
-📍 Singapore | 🎓 NUS | 🔗 [LinkedIn](https://www.linkedin.com/in/tridiv-swain-26ai09/)
+```bash
+git add index.html
+git commit -m "Update portfolio"
+git push
+```
+
+GitHub Pages auto-deploys on every push to `main`. Changes go live in ~60 seconds.
+
+---
+
+## Connect
+
+| Platform | Link |
+|---|---|
+| LinkedIn | [tridiv-swain-26ai09](https://www.linkedin.com/in/tridiv-swain-26ai09/) |
+| GitHub | [virtual41tridiv](https://github.com/virtual41tridiv) |
+| Google Scholar | [Publications](https://scholar.google.com/citations?user=7Vpgk4MAAAAJ&hl=en) |
+| Medium | Data Science · AI · Quantum Computing |
+
+---
+
+<p align="center">Designed & built by Tridiv Swain · Singapore · 2025</p>
