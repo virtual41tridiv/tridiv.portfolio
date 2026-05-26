@@ -10,7 +10,7 @@
 
 ## Preview
 
-![Portfolio Preview](Preview.png)
+![Portfolio Preview](preview.png)
 
 ---
 
