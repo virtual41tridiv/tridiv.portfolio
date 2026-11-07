@@ -1573,8 +1573,9 @@ html.lg-on .drop{display:block}
      Each glass element gets its own SVG filter. A displacement map,
      drawn to the element's exact size and corner radius, pushes the
      backdrop inward near the edges, so the glass bends what is behind
-     it like a lens. Floating controls split the colour channels a
-     little for the fringe you see on real glass. Chromium is the only
+     it like a lens. Only the droplet splits the colour channels, and
+     only faintly: on small controls it shows as coloured bars over
+     text. Chromium is the only
      engine that runs SVG filters inside backdrop-filter; elsewhere the
      CSS glass above is what people see.
      ========================================================== */
@@ -1686,7 +1687,7 @@ html.lg-on .drop{display:block}
         var keep = ['1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0',
                     '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0',
                     '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0'];
-        [1, 0.95, 0.9].forEach(function(mul, c){
+        [1, 1 - o.chroma, 1 - 2 * o.chroma].forEach(function(mul, c){
           var d = node('feDisplacementMap', { in:'SourceGraphic', in2:'map', xChannelSelector:'R', yChannelSelector:'G', result:'d' + c }, f);
           d.__mul = mul; passes.push(d);
           node('feColorMatrix', { in:'d' + c, type:'matrix', values:keep[c], result:'c' + c }, f);
@@ -1727,11 +1728,11 @@ html.lg-on .drop{display:block}
     }
 
     var glass = [
-      ['.nav .nav-in',     { bezel:18, scale:48, blur:5,  chroma:true }],
-      ['.menu .blob',      { bezel:12, scale:34, blur:0,  chroma:true }],
-      ['.btn-glass',       { bezel:12, scale:28, blur:3,  chroma:true }],
-      ['.tagfloat',        { bezel:11, scale:28, blur:2,  chroma:true }],
-      ['#fab',             { bezel:14, scale:34, blur:2,  chroma:true }],
+      ['.nav .nav-in',     { bezel:18, scale:48, blur:5 }],
+      ['.menu .blob',      { bezel:12, scale:24, blur:0 }],
+      ['.btn-glass',       { bezel:12, scale:28, blur:3 }],
+      ['.tagfloat',        { bezel:11, scale:28, blur:2 }],
+      ['#fab',             { bezel:14, scale:34, blur:2 }],
       ['.strip .strip-in', { bezel:20, scale:44, blur:10 }],
       ['.card',            { bezel:24, scale:52, blur:14 }],
       ['.root, .leaf',     { bezel:14, scale:32, blur:9  }]
@@ -1749,7 +1750,7 @@ html.lg-on .drop{display:block}
     drop.setAttribute('aria-hidden', 'true');
     drop.title = 'Drag me';
     hero.appendChild(drop);
-    lens(drop, { bezel:66, scale:74, blur:0, chroma:true, profile:DOME });
+    lens(drop, { bezel:66, scale:74, blur:0, chroma:0.025, profile:DOME });
 
     var dp = { x:0, y:0, tx:0, ty:0, id:0, held:false, ox:0, oy:0, set:false };
     var heroBox = function(){ return hero.getBoundingClientRect(); };
