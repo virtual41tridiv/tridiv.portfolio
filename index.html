@@ -407,11 +407,17 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
 #fab svg{width:16px;height:16px}
 
 /* ==========================================================
-   11 · THE ONE ANIMATION
-   a short fade and rise as things scroll in, nothing that loops
+   11 · ENTRY
+   panels drift forward out of depth as they scroll in. This uses the
+   individual translate/scale properties so `transform` stays free for
+   the pointer tilt and parallax in the spatial layer.
    ========================================================== */
-.up{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
-.up.in{opacity:1;transform:none}
+.up{
+  opacity:0;translate:0 26px;scale:.965;filter:blur(5px);
+  transition:opacity .8s cubic-bezier(.2,.7,.2,1),translate .8s cubic-bezier(.2,.7,.2,1),scale .8s cubic-bezier(.2,.7,.2,1),filter .8s ease,
+             border-color .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.up.in{opacity:1;translate:none;scale:none;filter:none}
 .d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}
 
 /* ==========================================================
@@ -458,13 +464,317 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   html{scroll-behavior:auto}
-  .up{opacity:1;transform:none}
+  .up{opacity:1;translate:none;scale:none;filter:none}
+}
+
+/* ==========================================================
+   13 · SPATIAL LAYER
+   Translucent glass panels floating in a soft, deep environment.
+   Panels sit at different depths, lean with the pointer, and catch
+   a highlight where you look at them.
+   ========================================================== */
+:root{
+  --bg:#EFEEEA;
+  --glass:rgba(255,255,255,.58);
+  --glass-hi:rgba(255,255,255,.8);
+  --glass-2:rgba(255,255,255,.42);
+  --glass-edge:rgba(255,255,255,.95);
+  --glass-line:rgba(35,39,44,.09);
+  --glass-blur:blur(26px) saturate(165%);
+  --spec:rgba(255,255,255,.6);
+  --grid:rgba(35,39,44,.075);
+  --orb:.5;
+  --shade:inset 0 1px 0 var(--glass-edge),0 1px 2px rgba(25,32,40,.05),0 14px 34px -14px rgba(25,32,40,.22);
+  --shade-lg:inset 0 1px 0 var(--glass-edge),0 2px 4px rgba(25,32,40,.05),0 36px 72px -26px rgba(25,32,40,.36);
+  --r:24px;
+}
+html[data-theme="night"]{
+  --bg:#101317;
+  --glass:rgba(36,42,50,.5);
+  --glass-hi:rgba(48,55,64,.74);
+  --glass-2:rgba(255,255,255,.055);
+  --glass-edge:rgba(255,255,255,.13);
+  --glass-line:rgba(255,255,255,.095);
+  --spec:rgba(255,255,255,.11);
+  --grid:rgba(231,232,230,.06);
+  --orb:.4;
+  --shade:inset 0 1px 0 var(--glass-edge),0 1px 2px rgba(0,0,0,.3),0 16px 38px -14px rgba(0,0,0,.6);
+  --shade-lg:inset 0 1px 0 var(--glass-edge),0 2px 4px rgba(0,0,0,.3),0 38px 80px -24px rgba(0,0,0,.75);
+}
+html{scroll-padding-top:96px}
+
+/* -- the environment: drifting light and a floor that recedes -- */
+.env{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;--px:0;--py:0;--sy:0}
+.orb{position:absolute;border-radius:50%;opacity:var(--orb);animation:drift 28s ease-in-out infinite alternate}
+.orb.o1{width:64vmax;height:64vmax;left:48%;top:-26%;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--cy) 75%,transparent),transparent);
+  translate:calc(var(--px) * -40px) calc(var(--py) * -30px + var(--sy) * -140px)}
+.orb.o2{width:58vmax;height:58vmax;left:-22%;top:46%;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--tl) 70%,transparent),transparent);
+  translate:calc(var(--px) * 30px) calc(var(--py) * 24px + var(--sy) * -260px);animation-duration:34s;animation-delay:-9s}
+.orb.o3{width:40vmax;height:40vmax;left:70%;top:62%;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--am) 62%,transparent),transparent);
+  translate:calc(var(--px) * -22px) calc(var(--py) * -18px + var(--sy) * -380px);animation-duration:24s;animation-delay:-14s}
+.orb.o4{width:36vmax;height:36vmax;left:-8%;top:-14%;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--in) 60%,transparent),transparent);
+  translate:calc(var(--px) * 18px) calc(var(--py) * 14px + var(--sy) * -80px);animation-duration:30s;animation-delay:-4s}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(4vw,3vh,0) scale(1.07)}
+  100%{transform:translate3d(-3vw,5vh,0) scale(.95)}
+}
+.floor{
+  position:absolute;left:-40%;right:-40%;bottom:-4%;height:64vh;
+  transform-origin:50% 100%;transform:perspective(520px) rotateX(66deg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:76px 76px;
+  background-position:calc(var(--px) * -30px) calc(var(--sy) * 1400px);
+  -webkit-mask-image:linear-gradient(to top,#000 0%,transparent 82%);mask-image:linear-gradient(to top,#000 0%,transparent 82%);
+}
+
+/* -- nav becomes a floating ornament -- */
+.nav{padding:12px var(--pad) 0;border:0}
+.nav.solid{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;border:0}
+.nav .nav-in{
+  position:relative;height:60px;max-width:calc(var(--max) - 2 * var(--pad));padding:0 .55rem 0 .6rem;border-radius:20px;
+  background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shade);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  transition:background .3s ease,box-shadow .3s ease;
+}
+.nav.solid .nav-in{background:var(--glass-hi);box-shadow:var(--shade-lg)}
+.logo .tick{border-radius:11px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.menu a{border-radius:12px}
+.menu a:hover{background:var(--glass-2)}
+.menu a.on{background:var(--glass-hi);box-shadow:inset 0 1px 0 var(--glass-edge),0 6px 14px -8px rgba(0,0,0,.25)}
+.menu a.on::after{display:none}
+.icon-btn{border-radius:13px;background:var(--glass-2);border-color:var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-edge)}
+.icon-btn:hover{background:var(--glass-hi);border-color:var(--glass-line)}
+
+/* -- hero: layered depth around the portrait -- */
+.hero{background:transparent;--px:0;--py:0}
+.hero .hero-text{transform:translate3d(calc(var(--px) * -6px),calc(var(--py) * -5px),0)}
+.tagline{backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.shot{perspective:900px}
+.frame{transform:rotateY(calc(var(--px) * 8deg)) rotateX(calc(var(--py) * -8deg))}
+.frame::before{transform:translate3d(calc(14px + var(--px) * 12px),calc(14px + var(--py) * 12px),0)}
+.frame::after{
+  content:'';position:absolute;inset:-18%;border-radius:50%;z-index:-1;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--cy) 32%,transparent),transparent);
+  transform:translate3d(calc(var(--px) * -14px),calc(var(--py) * -14px),0);
+}
+.pic{box-shadow:0 0 0 7px var(--glass),0 0 0 8px var(--glass-line),var(--shade-lg);transform:translate3d(calc(var(--px) * -4px),calc(var(--py) * -4px),0)}
+.tagfloat{
+  border-radius:13px;background:var(--glass-hi);border-color:var(--glass-line);box-shadow:var(--shade-lg);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.tagfloat.one{transform:translate3d(calc(var(--px) * 26px),calc(var(--py) * 22px),0)}
+.tagfloat.two{transform:translate3d(calc(var(--px) * 36px),calc(var(--py) * 30px),0)}
+
+.strip{border:0;background:none;padding:0 0 clamp(1.2rem,3vw,2rem)}
+.strip .strip-in{
+  width:calc(100% - 2 * var(--pad));max-width:calc(var(--max) - 2 * var(--pad));padding:0 .4rem;border-radius:22px;
+  background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shade);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.strip .sfig{padding:1.15rem 1.3rem;border-color:var(--glass-line)}
+
+/* -- buttons -- */
+.btn{border-radius:14px;transition:background .2s,border-color .2s,color .2s,transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn-glass{
+  background:var(--glass);border-color:var(--glass-line);box-shadow:var(--shade);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.btn-glass:hover{background:var(--glass-hi);border-color:var(--glass-line);box-shadow:var(--shade-lg)}
+.btn-round{border-radius:14px}
+.btn-fill,.btn-k{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--k) 80%,#fff),var(--k));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 26px -12px color-mix(in srgb,var(--k) 85%,transparent);
+}
+.btn-fill{--k:var(--cy)}
+.btn-fill:hover,.btn-k:hover{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--k) 86%,#fff),color-mix(in srgb,var(--k) 92%,#000));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 18px 34px -12px color-mix(in srgb,var(--k) 90%,transparent);
+}
+.btn-ink{box-shadow:var(--shade)}
+.btn.copied{background:var(--tl)}
+
+/* -- panels -- */
+#research,#experience{background:transparent}
+.kicker{backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur)}
+.card{
+  background:var(--glass);border-color:var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(560px circle at var(--mx,50%) var(--my,-30%),var(--spec),transparent 44%);
+  opacity:0;transition:opacity .4s ease;
+}
+.card:hover::after{opacity:1}
+.card:hover{border-color:color-mix(in srgb,var(--k) 38%,var(--glass-line))}
+.aside-box{background:var(--glass-2);border-color:var(--glass-line);border-radius:18px;box-shadow:inset 0 1px 0 var(--glass-edge)}
+.pill{background:var(--glass-2);border-color:var(--glass-line);border-radius:9px}
+.cites{background:var(--glass-2);border-color:var(--glass-line);border-radius:14px;box-shadow:inset 0 1px 0 var(--glass-edge)}
+.skill-ico,.reach-ico,.ahead .mark{box-shadow:inset 0 1px 0 var(--glass-edge)}
+.skill-ico{border-radius:14px}
+
+.root{
+  border-radius:18px;background:var(--glass);border-color:var(--glass-line);box-shadow:var(--shade-lg);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.limb-head{border-radius:16px;backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);box-shadow:inset 0 1px 0 var(--glass-edge)}
+.leaf{
+  border-radius:16px;background:var(--glass);border-color:var(--glass-line);box-shadow:var(--shade);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  transition:border-color .25s ease,transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease;
+}
+.leaf:hover{transform:translateY(-3px);box-shadow:var(--shade-lg)}
+
+.stop::before{
+  background:var(--bg);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--k) 14%,transparent),0 0 16px color-mix(in srgb,var(--k) 60%,transparent);
+}
+.line::before{background:linear-gradient(to bottom,transparent,var(--line) 6%,var(--line) 94%,transparent)}
+
+input,select,textarea{
+  border-radius:12px;border-color:var(--glass-line);
+  background:color-mix(in srgb,var(--bg) 55%,transparent);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.07);transition:border-color .2s,box-shadow .2s;
+}
+input:focus,select:focus,textarea:focus{box-shadow:inset 0 1px 3px rgba(0,0,0,.07),0 0 0 4px color-mix(in srgb,var(--k) 16%,transparent)}
+.soc{border-radius:13px;background:var(--glass-2);border-color:var(--glass-line);box-shadow:inset 0 1px 0 var(--glass-edge)}
+
+footer{
+  background:var(--glass-2);border-top:1px solid var(--glass-line);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+#fab{
+  border-radius:14px;background:var(--glass-hi);border-color:var(--glass-line);box-shadow:var(--shade-lg);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+
+/* -- small screens: the menu opens as a glass sheet under the ornament -- */
+@media(max-width:820px){
+  .nav{padding:10px 12px 0}
+  .nav .nav-in{max-width:none}
+  .menu{
+    position:absolute;inset:auto;top:calc(100% + 10px);left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:.1rem;padding:.5rem;border-radius:20px;
+    background:color-mix(in srgb,var(--bg) 94%,transparent);border:1px solid var(--glass-line);box-shadow:var(--shade-lg);
+    transform:translateY(-8px) scale(.98);opacity:0;visibility:hidden;
+    transition:opacity .22s ease,transform .28s cubic-bezier(.2,.8,.2,1),visibility .28s;
+  }
+  .menu.open{opacity:1;visibility:visible;transform:none}
+  .menu a{padding:.8rem .9rem;border-bottom:0;border-radius:12px}
+  .strip .strip-in{width:calc(100% - 24px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .orb{animation:none}
+}
+
+/* ==========================================================
+   14 · LIQUID GLASS
+   Clearer, thicker glass: a bright rim that catches light on two
+   corners, an inner glow for thickness, and a sheen across the face.
+   In Chromium browsers the script adds true refraction, so whatever
+   sits behind a panel bends at its edges like light through a lens.
+   ========================================================== */
+:root{
+  --glass:rgba(255,255,255,.4);
+  --glass-hi:rgba(255,255,255,.62);
+  --glass-blur:blur(14px) saturate(190%) brightness(1.04);
+  --sheen:linear-gradient(155deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 36%,rgba(255,255,255,0) 72%,rgba(255,255,255,.16) 100%);
+  --rim-a:rgba(255,255,255,.98);
+  --rim-b:rgba(255,255,255,.62);
+  --lg-in:inset 0 1px 1px rgba(255,255,255,.75),inset 0 -1px 1px rgba(255,255,255,.3),inset 0 0 22px -6px rgba(255,255,255,.6);
+  --shade:var(--lg-in),0 1px 2px rgba(25,32,40,.05),0 14px 34px -14px rgba(25,32,40,.22);
+  --shade-lg:var(--lg-in),0 2px 4px rgba(25,32,40,.05),0 36px 72px -26px rgba(25,32,40,.36);
+}
+html[data-theme="night"]{
+  --glass:rgba(30,36,44,.38);
+  --glass-hi:rgba(44,51,60,.6);
+  --sheen:linear-gradient(155deg,rgba(255,255,255,.11) 0%,rgba(255,255,255,0) 36%,rgba(255,255,255,0) 72%,rgba(255,255,255,.05) 100%);
+  --rim-a:rgba(255,255,255,.42);
+  --rim-b:rgba(255,255,255,.18);
+  --lg-in:inset 0 1px 1px rgba(255,255,255,.2),inset 0 -1px 1px rgba(255,255,255,.07),inset 0 0 24px -8px rgba(255,255,255,.14);
+  --shade:var(--lg-in),0 1px 2px rgba(0,0,0,.3),0 16px 38px -14px rgba(0,0,0,.6);
+  --shade-lg:var(--lg-in),0 2px 4px rgba(0,0,0,.3),0 38px 80px -24px rgba(0,0,0,.75);
+}
+
+/* the face of the glass */
+.card,.nav .nav-in,.btn-glass,.strip .strip-in,.root,.leaf{background:var(--sheen),var(--glass)}
+.nav.solid .nav-in,.tagfloat,#fab,.btn-glass:hover{background:var(--sheen),var(--glass-hi)}
+.btn-glass,.icon-btn,.root,.strip .strip-in{position:relative}
+
+/* the rim: a hairline that is brightest where light enters and leaves */
+.card::before,.nav .nav-in::before,.btn-glass::before,.tagfloat::before,.strip .strip-in::before,
+#fab::before,.root::before,.leaf::before,.icon-btn::before,.menu .blob::before,.drop::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1.25px;pointer-events:none;
+  background:linear-gradient(140deg,var(--rim-a) 0%,transparent 30%,transparent 62%,var(--rim-b) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+.icon-btn{box-shadow:var(--lg-in)}
+.btn-fill,.btn-k{box-shadow:inset 0 1px 1px rgba(255,255,255,.5),inset 0 -2px 6px rgba(0,0,0,.12),0 12px 26px -12px color-mix(in srgb,var(--k) 85%,transparent)}
+
+/* jelly: controls squash when pressed and spring back */
+.btn,.icon-btn,#fab,.soc{
+  transition:background .2s,border-color .2s,color .2s,box-shadow .25s,opacity .25s,transform .6s cubic-bezier(.34,1.56,.4,1);
+}
+.btn:active,.icon-btn:active,#fab:active,.soc:active{transform:scale(1.07,.9);transition-duration:.12s}
+
+/* the liquid nav indicator: a lens that slides between links */
+.menu{position:relative}
+.menu a{z-index:1}
+.menu a.on{background:none;box-shadow:none}
+.menu .blob{
+  position:absolute;left:0;top:0;width:0;height:0;border-radius:13px;pointer-events:none;z-index:2;opacity:0;
+  background:var(--sheen),rgba(255,255,255,.07);
+  box-shadow:var(--lg-in),0 6px 16px -8px rgba(0,0,0,.35);
+  transition:left .6s cubic-bezier(.34,1.45,.4,1),width .6s cubic-bezier(.34,1.45,.4,1),top .3s ease,opacity .3s ease;
+}
+html:not(.lg-on) .menu .blob{z-index:0;background:var(--sheen),var(--glass-hi)}
+.menu .blob.still{transition:none}
+.menu .blob.squish{animation:squish .6s cubic-bezier(.3,.7,.3,1)}
+@keyframes squish{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.16,.82)}
+  62%{transform:scale(.96,1.06)}
+  100%{transform:scale(1)}
+}
+
+/* a glass droplet resting by the portrait; drag it over anything */
+.drop{
+  position:absolute;left:0;top:0;z-index:5;width:132px;height:132px;border-radius:50%;
+  display:none;cursor:grab;touch-action:none;will-change:transform;
+  background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.42),rgba(255,255,255,0) 40%),rgba(255,255,255,.03);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.85),inset 0 -4px 8px rgba(255,255,255,.28),inset 0 0 30px rgba(255,255,255,.2),
+             0 22px 44px -18px rgba(0,0,0,.45);
+}
+html[data-theme="night"] .drop{
+  background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.2),rgba(255,255,255,0) 40%),rgba(255,255,255,.02);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.45),inset 0 -4px 8px rgba(255,255,255,.12),inset 0 0 30px rgba(255,255,255,.1),
+             0 22px 44px -18px rgba(0,0,0,.7);
+}
+html.lg-on .drop{display:block}
+.drop.held{cursor:grabbing}
+
+@media(max-width:820px){
+  .menu .blob,html.lg-on .drop{display:none}
+  .menu a.on{background:var(--glass-hi);box-shadow:var(--lg-in)}
 }
 </style>
 </head>
 
 <body>
 <div id="bar"></div>
+
+<div class="env" id="env" aria-hidden="true">
+  <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><i class="orb o4"></i>
+  <div class="floor"></div>
+</div>
 
 <!-- ===================== NAV ===================== -->
 <div class="nav" id="nav">
@@ -995,6 +1305,8 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
 
   /* progress bar, active link, back to top */
   var bar = document.getElementById('bar');
+  var env = document.getElementById('env');
+  var syncBlob = null;
   var nav = document.getElementById('nav');
   var fab = document.getElementById('fab');
   var links = [].slice.call(menu.querySelectorAll('a'));
@@ -1005,6 +1317,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
     var h = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
     nav.classList.toggle('solid', y > 60);
+    if(env && !slow) env.style.setProperty('--sy', (h > 0 ? y / h : 0).toFixed(4));
     fab.classList.toggle('show', y > 700);
 
     var at = '';
@@ -1012,6 +1325,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
       if(secs[i].getBoundingClientRect().top <= window.innerHeight * 0.38) at = secs[i].id;
     }
     links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + at); });
+    if(syncBlob) syncBlob();
   }
   window.addEventListener('scroll', frame, { passive:true });
   window.addEventListener('resize', frame);
@@ -1196,6 +1510,306 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:2.4rem 0}
       obs.disconnect();
       requestAnimationFrame(revealWires);
     }, { threshold:0.15 }).observe(tree);
+  }
+
+  /* ==========================================================
+     SPATIAL
+     The environment and the hero portrait shift with the pointer at
+     different depths, and glass panels lean toward where you point.
+     Pointer devices only, and nothing moves under reduced motion.
+     ========================================================== */
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var hero = document.getElementById('home');
+
+  if(fine && !slow){
+    var tx = 0, ty = 0, px = 0, py = 0, look = 0;
+    var drift = function(){
+      px += (tx - px) * 0.06;
+      py += (ty - py) * 0.06;
+      var sx = px.toFixed(4), sy = py.toFixed(4);
+      env.style.setProperty('--px', sx); env.style.setProperty('--py', sy);
+      hero.style.setProperty('--px', sx); hero.style.setProperty('--py', sy);
+      look = (Math.abs(tx - px) > 0.001 || Math.abs(ty - py) > 0.001) ? requestAnimationFrame(drift) : 0;
+    };
+    window.addEventListener('pointermove', function(e){
+      tx = e.clientX / window.innerWidth * 2 - 1;
+      ty = e.clientY / window.innerHeight * 2 - 1;
+      if(!look) look = requestAnimationFrame(drift);
+    }, { passive:true });
+    document.documentElement.addEventListener('pointerleave', function(){
+      tx = 0; ty = 0;
+      if(!look) look = requestAnimationFrame(drift);
+    });
+
+    [].slice.call(document.querySelectorAll('.card:not(form)')).forEach(function(el){
+      var s = { rx:0, ry:0, z:0, trx:0, tryy:0, tz:0, id:0 };
+      var tick = function(){
+        s.rx += (s.trx - s.rx) * 0.14;
+        s.ry += (s.tryy - s.ry) * 0.14;
+        s.z  += (s.tz - s.z) * 0.14;
+        var still = Math.abs(s.trx - s.rx) < 0.01 && Math.abs(s.tryy - s.ry) < 0.01 && Math.abs(s.tz - s.z) < 0.05;
+        if(still && s.tz === 0){ el.style.transform = ''; s.id = 0; return; }
+        el.style.transform = 'perspective(1100px) rotateX(' + s.rx.toFixed(3) + 'deg) rotateY(' + s.ry.toFixed(3) + 'deg) translateZ(' + s.z.toFixed(2) + 'px)';
+        s.id = still ? 0 : requestAnimationFrame(tick);
+      };
+      var kick = function(){ if(!s.id) s.id = requestAnimationFrame(tick); };
+      el.addEventListener('pointermove', function(e){
+        var b = el.getBoundingClientRect();
+        var x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
+        var m = b.width > 640 ? 2.4 : 6;
+        s.trx = (0.5 - y) * m;
+        s.tryy = (x - 0.5) * m;
+        s.tz = 16;
+        el.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+        kick();
+      });
+      el.addEventListener('pointerleave', function(){ s.trx = 0; s.tryy = 0; s.tz = 0; kick(); });
+    });
+  }
+
+  /* ==========================================================
+     LIQUID GLASS
+     Each glass element gets its own SVG filter. A displacement map,
+     drawn to the element's exact size and corner radius, pushes the
+     backdrop inward near the edges, so the glass bends what is behind
+     it like a lens. Floating controls split the colour channels a
+     little for the fringe you see on real glass. Chromium is the only
+     engine that runs SVG filters inside backdrop-filter; elsewhere the
+     CSS glass above is what people see.
+     ========================================================== */
+  var brands = navigator.userAgentData && navigator.userAgentData.brands;
+  var LIQUID = !!(brands && brands.some(function(b){ return /Chromium/.test(b.brand); }));
+
+  /* liquid nav indicator */
+  var blob = document.createElement('span');
+  blob.className = 'blob still';
+  blob.setAttribute('aria-hidden', 'true');
+  menu.appendChild(blob);
+  var blobAt = null, hoverA = null;
+
+  function placeBlob(a, force){
+    if(!a){ blob.style.opacity = '0'; blobAt = null; return; }
+    if(a === blobAt && !force) return;
+    var moved = blobAt && a !== blobAt;
+    blobAt = a;
+    blob.style.opacity = '1';
+    blob.style.left = a.offsetLeft + 'px';
+    blob.style.top = a.offsetTop + 'px';
+    blob.style.width = a.offsetWidth + 'px';
+    blob.style.height = a.offsetHeight + 'px';
+    if(moved && !slow){
+      blob.classList.remove('squish'); void blob.offsetWidth; blob.classList.add('squish');
+    }
+  }
+  syncBlob = function(){
+    if(hoverA) return;
+    placeBlob(links.filter(function(a){ return a.classList.contains('on'); })[0] || null);
+  };
+  menu.addEventListener('mouseover', function(e){
+    var a = e.target.closest('a');
+    if(a){ hoverA = a; placeBlob(a); }
+  });
+  menu.addEventListener('mouseleave', function(){ hoverA = null; syncBlob(); });
+  window.addEventListener('resize', function(){ if(blobAt) placeBlob(blobAt, true); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(blobAt) placeBlob(blobAt, true); });
+  syncBlob();
+  requestAnimationFrame(function(){ blob.classList.remove('still'); });
+
+  if(LIQUID){
+    root.classList.add('lg-on');
+
+    var defs = document.createElementNS(NS, 'svg');
+    defs.setAttribute('width', '0'); defs.setAttribute('height', '0');
+    defs.setAttribute('aria-hidden', 'true');
+    defs.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+    document.body.appendChild(defs);
+    var uid = 0;
+
+    /* edge profiles: how hard the glass bends at depth t (0 inside, 1 at the rim) */
+    var RIM = function(t){ return t * t; };
+    var DOME = function(t){ return 0.55 * t + 0.45 * t * t * t; };
+
+    /* displacement map for a rounded rectangle */
+    function lensMap(w, h, r, bezel, profile){
+      var s = Math.max(0.25, Math.min(1, 300 / Math.max(w, h)));
+      var W = Math.max(2, Math.round(w * s)), H = Math.max(2, Math.round(h * s));
+      var cv = document.createElement('canvas');
+      cv.width = W; cv.height = H;
+      var ctx = cv.getContext('2d');
+      var img = ctx.createImageData(W, H), D = img.data;
+      var hw = w / 2, hh = h / 2;
+      r = Math.min(r, hw, hh);
+      for(var j = 0; j < H; j++){
+        for(var i = 0; i < W; i++){
+          var x = (i + 0.5) / s - hw, y = (j + 0.5) / s - hh;
+          var ax = Math.abs(x), ay = Math.abs(y);
+          var qx = ax - (hw - r), qy = ay - (hh - r);
+          var dist, nx = 0, ny = 0;
+          if(qx > 0 && qy > 0){
+            var L = Math.sqrt(qx * qx + qy * qy) || 1;
+            dist = r - L; nx = qx / L; ny = qy / L;
+          } else if(qx > qy){
+            dist = r - qx; nx = 1;
+          } else {
+            dist = r - qy; ny = 1;
+          }
+          if(x < 0) nx = -nx;
+          if(y < 0) ny = -ny;
+          var k = (j * W + i) * 4, m = 0;
+          if(dist >= 0 && dist < bezel) m = profile(1 - dist / bezel);
+          D[k]     = Math.round(128 - nx * m * 127);
+          D[k + 1] = Math.round(128 - ny * m * 127);
+          D[k + 2] = 128;
+          D[k + 3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      return cv.toDataURL();
+    }
+
+    function node(tag, attrs, parent){
+      var n = document.createElementNS(NS, tag);
+      for(var a in attrs) n.setAttribute(a, attrs[a]);
+      if(parent) parent.appendChild(n);
+      return n;
+    }
+
+    function lens(el, o){
+      if(el.dataset.lens) return;
+      var id = 'lg' + (uid++);
+      el.dataset.lens = id;
+      var f = node('filter', { id:id, 'color-interpolation-filters':'sRGB' }, defs);
+      var map = node('feImage', { x:0, y:0, width:1, height:1, preserveAspectRatio:'none', result:'map' }, f);
+      var passes = [];
+      if(o.chroma){
+        var keep = ['1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0',
+                    '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0',
+                    '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0'];
+        [1, 0.95, 0.9].forEach(function(mul, c){
+          var d = node('feDisplacementMap', { in:'SourceGraphic', in2:'map', xChannelSelector:'R', yChannelSelector:'G', result:'d' + c }, f);
+          d.__mul = mul; passes.push(d);
+          node('feColorMatrix', { in:'d' + c, type:'matrix', values:keep[c], result:'c' + c }, f);
+        });
+        node('feBlend', { in:'c0', in2:'c1', mode:'screen', result:'rg' }, f);
+        node('feBlend', { in:'rg', in2:'c2', mode:'screen' }, f);
+      } else {
+        var d1 = node('feDisplacementMap', { in:'SourceGraphic', in2:'map', xChannelSelector:'R', yChannelSelector:'G' }, f);
+        d1.__mul = 1; passes.push(d1);
+      }
+
+      var lastKey = '';
+      function build(){
+        var w = el.offsetWidth, h = el.offsetHeight;
+        if(!w || !h) return;
+        var r = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+        var bezel = Math.min(o.bezel, w / 2, h / 2);
+        var key = w + 'x' + h + 'r' + r;
+        if(key === lastKey) return;
+        lastKey = key;
+        map.setAttribute('width', w);
+        map.setAttribute('height', h);
+        map.setAttribute('href', lensMap(w, h, r, bezel, o.profile || RIM));
+        passes.forEach(function(p){ p.setAttribute('scale', (o.scale * p.__mul).toFixed(1)); });
+        var bf = 'url(#' + id + ') blur(' + o.blur + 'px) saturate(190%) brightness(1.04)';
+        el.style.backdropFilter = bf;
+        el.style.webkitBackdropFilter = bf;
+      }
+      var pending = false;
+      var queue = function(){
+        if(pending) return;
+        pending = true;
+        requestAnimationFrame(function(){ pending = false; build(); });
+      };
+      build();
+      if(window.ResizeObserver) new ResizeObserver(queue).observe(el);
+      else window.addEventListener('resize', queue);
+    }
+
+    var glass = [
+      ['.nav .nav-in',     { bezel:18, scale:48, blur:5,  chroma:true }],
+      ['.menu .blob',      { bezel:12, scale:34, blur:0,  chroma:true }],
+      ['.btn-glass',       { bezel:12, scale:28, blur:3,  chroma:true }],
+      ['.tagfloat',        { bezel:11, scale:28, blur:2,  chroma:true }],
+      ['#fab',             { bezel:14, scale:34, blur:2,  chroma:true }],
+      ['.strip .strip-in', { bezel:20, scale:44, blur:10 }],
+      ['.card',            { bezel:24, scale:52, blur:14 }],
+      ['.root, .leaf',     { bezel:14, scale:32, blur:9  }]
+    ];
+    var lensAll = function(){
+      glass.forEach(function(g){
+        [].slice.call(document.querySelectorAll(g[0])).forEach(function(el){ lens(el, g[1]); });
+      });
+    };
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(lensAll); else lensAll();
+
+    /* the droplet: a full dome lens you can pick up and move */
+    var drop = document.createElement('div');
+    drop.className = 'drop';
+    drop.setAttribute('aria-hidden', 'true');
+    drop.title = 'Drag me';
+    hero.appendChild(drop);
+    lens(drop, { bezel:66, scale:74, blur:0, chroma:true, profile:DOME });
+
+    var dp = { x:0, y:0, tx:0, ty:0, id:0, held:false, ox:0, oy:0, set:false };
+    var heroBox = function(){ return hero.getBoundingClientRect(); };
+    var clampDrop = function(){
+      var hb = heroBox(), s = drop.offsetWidth || 132;
+      dp.tx = Math.max(8, Math.min(hb.width - s - 8, dp.tx));
+      dp.ty = Math.max(80, Math.min(hb.height - s - 8, dp.ty));
+    };
+    var paintDrop = function(sx, sy, ang){
+      drop.style.transform = 'translate3d(' + dp.x.toFixed(1) + 'px,' + dp.y.toFixed(1) + 'px,0)' +
+        (ang === undefined ? '' : ' rotate(' + ang + 'rad) scale(' + sx + ',' + sy + ') rotate(' + (-ang) + 'rad)');
+    };
+    var rest = function(){
+      var fr = document.querySelector('.hero .frame');
+      if(!fr || !drop.offsetWidth) return;
+      var hb = heroBox(), fb = fr.getBoundingClientRect();
+      dp.tx = fb.left - hb.left - drop.offsetWidth * 0.42;
+      dp.ty = fb.bottom - hb.top - drop.offsetWidth * 0.78;
+      clampDrop();
+      dp.x = dp.tx; dp.y = dp.ty;
+      paintDrop();
+      dp.set = true;
+    };
+    var flow = function(){
+      var px0 = dp.x, py0 = dp.y;
+      dp.x += (dp.tx - dp.x) * 0.24;
+      dp.y += (dp.ty - dp.y) * 0.24;
+      var vx = dp.x - px0, vy = dp.y - py0;
+      var v = slow ? 0 : Math.min(Math.sqrt(vx * vx + vy * vy) / 60, 0.22);
+      paintDrop((1 + v).toFixed(3), (1 - v * 0.8).toFixed(3), Math.atan2(vy, vx).toFixed(3));
+      if(dp.held || Math.abs(dp.tx - dp.x) > 0.2 || Math.abs(dp.ty - dp.y) > 0.2) dp.id = requestAnimationFrame(flow);
+      else { dp.id = 0; paintDrop(); }
+    };
+    drop.addEventListener('pointerdown', function(e){
+      e.preventDefault();
+      drop.setPointerCapture(e.pointerId);
+      dp.held = true;
+      drop.classList.add('held');
+      var hb = heroBox();
+      dp.ox = e.clientX - hb.left - dp.x;
+      dp.oy = e.clientY - hb.top - dp.y;
+      if(!dp.id) dp.id = requestAnimationFrame(flow);
+    });
+    drop.addEventListener('pointermove', function(e){
+      if(!dp.held) return;
+      var hb = heroBox();
+      dp.tx = e.clientX - hb.left - dp.ox;
+      dp.ty = e.clientY - hb.top - dp.oy;
+      clampDrop();
+    });
+    var letGo = function(){ dp.held = false; drop.classList.remove('held'); };
+    drop.addEventListener('pointerup', letGo);
+    drop.addEventListener('pointercancel', letGo);
+    window.addEventListener('resize', function(){
+      if(!dp.set) return rest();
+      clampDrop(); dp.x = dp.tx; dp.y = dp.ty; paintDrop();
+    });
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(rest);
+    window.addEventListener('load', rest);
+    rest();
   }
 
   /* copy email */
